@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { createContext, useContext } from 'react';
 
-function App() {
+const AppContext = createContext();
+const App = () => {
+  const user = {
+    nickname: 'danuel',
+    isAdmin: true,
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <AppContext.Provider value={user}>
+      <div>
+        <Posts />
+      </div>
+    </AppContext.Provider>
+  );
+};
+
+const Posts = () => {
+  const posts = [
+    {
+      title: 'userContext',
+      content: 'react context를',
+    },
+  ];
+  return <Children posts={posts} />;
+};
+
+const Children = (props) => {
+  const user = useContext(AppContext);
+  const posts = props.posts;
+
+  return (
+    <div>
+      <h1> {user.nickname}</h1>
+
+      <h2>{posts[0].title}</h2>
     </div>
   );
-}
+};
 
 export default App;
